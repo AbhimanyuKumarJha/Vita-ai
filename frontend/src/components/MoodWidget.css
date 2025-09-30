@@ -1,0 +1,76 @@
+.mood-widget {
+  position: relative;
+  background: linear-gradient(180deg, rgba(132, 98, 255, 0.4) 0%, rgba(255, 202, 222, 0.5) 100%);
+  border-radius: 40px;
+  padding: 32px;
+  color: white;
+  min-height: 420px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+}
+
+.mood-widget__art {
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mood-widget__bubble {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(0px);
+}
+
+.mood-widget__bubble--primary {
+  width: 260px;
+  height: 260px;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.9) 0%, rgba(174, 119, 255, 0.6) 45%, rgba(134, 89, 255, 0.3) 100%);
+  animation: float 8s ease-in-out infinite;
+}
+
+.mood-widget__bubble--secondary {
+  width: 180px;
+  height: 180px;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.8) 0%, rgba(255, 185, 238, 0.6) 60%, rgba(241, 130, 209, 0.25) 100%);
+  animation: float 10s ease-in-out infinite reverse;
+}
+
+.mood-widget__voice {
+  position: relative;
+  margin-top: 220px;
+  padding: 12px 20px;
+  border-radius: 999px;
+  border: none;
+  font-size: 0.95rem;
+  color: #2f2760;
+  background: rgba(255, 255, 255, 0.85);
+  cursor: pointer;
+  box-shadow: 0 12px 24px rgba(47, 39, 96, 0.2);
+}
+
+.mood-widget__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.mood-widget__chips span {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 18px;
+  padding: 8px 14px;
+  font-size: 0.85rem;
+  backdrop-filter: blur(4px);
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(-6px) scale(1);
+  }
+  50% {
+    transform: translateY(6px) scale(1.05);
+  }
+}

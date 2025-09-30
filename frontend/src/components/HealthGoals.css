@@ -1,0 +1,80 @@
+.health-goals {
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: 28px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  box-shadow: 0 24px 55px rgba(119, 108, 255, 0.09);
+}
+
+.health-goals h2 {
+  margin: 0;
+  font-size: 1.4rem;
+  color: #2f2760;
+}
+
+.health-goals__list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.goal-card {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  background: rgba(245, 242, 255, 0.6);
+  border-radius: 22px;
+  padding: 16px;
+}
+
+.goal-card__progress {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-weight: 600;
+  color: #2f2760;
+  background: conic-gradient(var(--goal-color, #7a5cff) var(--value), rgba(236, 231, 255, 0.6) var(--value));
+  position: relative;
+}
+
+.goal-card__progress::after {
+  content: '';
+  position: absolute;
+  inset: 6px;
+  background: white;
+  border-radius: 50%;
+  z-index: 0;
+}
+
+.goal-card__progress span {
+  position: relative;
+  z-index: 1;
+}
+
+.goal-card__content h3 {
+  margin: 0;
+  font-size: 1rem;
+  color: #2f2760;
+}
+
+.goal-card__content p {
+  margin: 6px 0 0;
+  color: rgba(47, 39, 96, 0.6);
+  font-size: 0.85rem;
+}
+
+.goal-card--emerald {
+  --goal-color: #31c98f;
+}
+
+.goal-card--violet {
+  --goal-color: #9671ff;
+}
+
+.goal-card--pink {
+  --goal-color: #f471b5;
+}

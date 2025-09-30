@@ -1,0 +1,125 @@
+.metrics-board {
+  background: rgba(255, 255, 255, 0.82);
+  border-radius: 28px;
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  box-shadow: 0 24px 55px rgba(119, 108, 255, 0.12);
+}
+
+.metrics-board__header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.metrics-board__header h2 {
+  margin: 0;
+  font-size: 1.5rem;
+  color: #2f2760;
+}
+
+.metrics-board__sub {
+  font-size: 0.85rem;
+  color: rgba(47, 39, 96, 0.6);
+}
+
+.metrics-board__status {
+  font-size: 0.85rem;
+  background: rgba(123, 104, 238, 0.1);
+  padding: 8px 16px;
+  border-radius: 20px;
+  color: #6b56ff;
+}
+
+.metrics-board__grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.metric-card {
+  background: rgba(247, 245, 255, 0.8);
+  border-radius: 24px;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-height: 140px;
+  position: relative;
+  overflow: hidden;
+}
+
+.metric-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  pointer-events: none;
+}
+
+.metric-card--mood {
+  background: linear-gradient(180deg, rgba(130, 103, 255, 0.3) 0%, rgba(225, 198, 255, 0.55) 100%);
+  color: #271e55;
+}
+
+.metric-card--steps {
+  background: linear-gradient(180deg, rgba(144, 202, 255, 0.25) 0%, rgba(207, 250, 254, 0.4) 100%);
+}
+
+.metric-card__icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 16px;
+  display: grid;
+  place-items: center;
+  font-size: 1.25rem;
+  background: rgba(255, 255, 255, 0.7);
+  color: #6b56ff;
+}
+
+.metric-card__icon--accent {
+  color: #f56abc;
+  background: rgba(245, 106, 188, 0.12);
+}
+
+.metric-card__icon--aqua {
+  color: #34c3ff;
+  background: rgba(52, 195, 255, 0.12);
+}
+
+.metric-card__icon--navy {
+  color: #1c6cfe;
+  background: rgba(28, 108, 254, 0.12);
+}
+
+.metric-card__label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.metric-card__label h3 {
+  margin: 0;
+  font-size: 1rem;
+  color: #2f2760;
+}
+
+.metric-card__status {
+  font-size: 0.75rem;
+  color: rgba(47, 39, 96, 0.6);
+}
+
+.metric-card__value {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #2f2760;
+}
+
+.metric-card__meta {
+  font-size: 0.85rem;
+  color: rgba(39, 30, 85, 0.75);
+}
