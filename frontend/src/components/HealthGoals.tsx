@@ -68,44 +68,53 @@ export const HealthGoals = () => {
   );
 
   return (
-    <section className="bg-white/85 rounded-[28px] p-6 flex flex-col gap-4.5 shadow-lg shadow-indigo-500/10">
-      <h2 className="m-0 text-[1.4rem] text-[#2f2760]">Health Goals</h2>
-      <div className="flex flex-col gap-4">
+    <section className=" flex flex-col">
+      <h2 className="m-0 text-xl font-semibold text-[#2f2760]">Health Goals</h2>
+      <div className="flex flex-col gap-1 bg-slate-200/70 rounded-3xl backdrop-blur-md  p-2">
         {goals.map((goal) => (
           <article
             key={goal.id}
-            className={`flex items-center gap-4.5 bg-purple-50/60 rounded-[22px] p-4 ${
-              goal.tone === "emerald"
-                ? "goal-emerald"
-                : goal.tone === "violet"
-                ? "goal-violet"
-                : "goal-pink"
-            }`}
+            className="flex items-center gap-4.5 hover:bg-slate-100/50 
+           rounded-2xl p-4 cursor-pointer"
           >
             <div
-              className="relative w-16 h-16 rounded-full grid place-items-center font-semibold text-[#2f2760] bg-gradient-to-r"
+              className={`
+              relative w-16 h-16 rounded-full grid place-items-center font-semibold
+              ${
+                goal.tone === "emerald"
+                  ? "text-emerald-600 bg-emerald-100"
+                  : goal.tone === "violet"
+                  ? "text-violet-600 bg-violet-100"
+                  : "text-pink-600 bg-pink-100"
+              }
+              shadow-[inset_4px_4px_6px_rgba(0,0,0,0.1),inset_-4px_-4px_6px_rgba(255,255,255,0.7)]
+              `}
               style={{
-                backgroundImage: `conic-gradient(${
+                background: `conic-gradient(${
                   goal.tone === "emerald"
                     ? "#31c98f"
                     : goal.tone === "violet"
                     ? "#9671ff"
                     : "#f471b5"
-                } ${Math.round(
-                  goal.progress * 100
-                )}%, rgba(236, 231, 255, 0.6) ${Math.round(
-                  goal.progress * 100
-                )}%)`,
+                } ${Math.round(goal.progress * 100)}%, ${
+                  goal.tone === "emerald"
+                    ? "#d1fae5"
+                    : goal.tone === "violet"
+                    ? "#ede9fe"
+                    : "#fce7f3"
+                } ${Math.round(goal.progress * 100)}%)`,
               }}
             >
-              <div className="absolute inset-[6px] bg-white rounded-full z-0"></div>
-              <span className="relative z-1">
+              <div className="absolute inset-[6px] bg-slate-200 rounded-full z-0"></div>
+              <span className="relative z-1 justify-start text-black text-xs font-semibold">
                 {Math.round(goal.progress * 100)}%
               </span>
             </div>
             <div>
-              <h3 className="m-0 text-base text-[#2f2760]">{goal.title}</h3>
-              <p className="mt-1.5 mb-0 text-[#2f2760]/60 text-[0.85rem]">
+              <h3 className="m-0 justify-start text-black text-base font-medium">
+                {goal.title}
+              </h3>
+              <p className="mt-1.5 mb-0 text-black font-normal text-xs">
                 {goal.subtitle}
               </p>
             </div>
