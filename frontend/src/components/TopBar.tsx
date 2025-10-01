@@ -1,7 +1,8 @@
 import { FiBell } from "react-icons/fi";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import ButtonAnimatedGradient from "./ui/button";
 import SearchHoverRight from "./ui/searchbar";
+import { FramerModal, ModalContent } from "./ui/modal";
 
 export const TopBar = () => {
   const today = new Date().toLocaleDateString(undefined, {
@@ -45,6 +46,8 @@ export const TopBar = () => {
     }
   };
 
+  const [modalOpen, setModalOpen] = useState(false);
+
   return (
     <header className="flex items-center justify-between py-6 px-8 bg-violet-100 rounded-2xl shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)] backdrop-blur-lg">
       <div className="flex items-center gap-5">
@@ -77,8 +80,12 @@ export const TopBar = () => {
         {/* <button className="border-none py-3 px-5 rounded-[24px] bg-gradient-to-br from-indigo-500 to-purple-400 text-white font-normal cursor-pointer transition-all hover:-translate-y-0.5 hover:shadow-lg hover:shadow-indigo-500/25">
           Online Consultation
         </button> */}
-        <ButtonAnimatedGradient>Online Consultation</ButtonAnimatedGradient>
-        <span className="text-sm text-black py-2 px-4 text-semibold font-poppins leading-none">
+
+        <ButtonAnimatedGradient onClick={() => setModalOpen(true)}>
+          Online Consultation
+        </ButtonAnimatedGradient>
+        <Dialog modalOpen={modalOpen} setModalOpen={setModalOpen} />
+        <span className="text-sm text-black py-2 px-4 font-semibold font-poppins leading-none max-sm:hidden">
           {today}
         </span>
         {/* <div className="flex items-center gap-3 bg-white/80 py-2.5 px-4 rounded-[26px] text-[#463e6f]">
@@ -99,6 +106,60 @@ export const TopBar = () => {
         </div> */}
       </div>
     </header>
+  );
+};
+
+const Dialog = ({
+  modalOpen,
+  setModalOpen,
+}: {
+  modalOpen: boolean;
+  setModalOpen: (open: boolean) => void;
+}) => {
+  return (
+    <FramerModal open={modalOpen} setOpen={setModalOpen}>
+      <ModalContent>
+        <div className="flex flex-col space-y-1.5 text-center sm:text-left">
+          <h2 className="text-lg font-semibold leading-none tracking-tight">
+            Edit profile
+          </h2>
+          <p className="text-sm text-muted-foreground">
+            Make changes to your profile here. Click save when you're done.
+          </p>
+        </div>
+        <div className="grid gap-4 py-4">
+          <div className="grid grid-cols-4 items-center gap-4">
+            <label className="text-sm font-medium leading-none text-right">
+              Name
+            </label>
+            <input
+              className="flex h-9 w-full rounded-md border bg-transparent px-3 py-1 text-sm shadow-sm transition-colors placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 disabled:cursor-not-allowed disabled:opacity-50 col-span-3"
+              id="name"
+              defaultValue="Pedro Duarte"
+            />
+          </div>
+          <div className="grid grid-cols-4 items-center gap-4">
+            <label className="text-sm font-medium leading-none text-right">
+              Username
+            </label>
+            <input
+              className="flex h-9 w-full rounded-md border bg-transparent px-3 py-1 text-sm shadow-sm transition-colors placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 disabled:cursor-not-allowed disabled:opacity-50 col-span-3"
+              id="username"
+              defaultValue="@peduarte"
+            />
+          </div>
+        </div>
+        <div className="mt-4">
+          <button
+            onClick={() => setModalOpen(false)}
+            className="w-full p-3 bg-black dark:bg-white text-white dark:text-black rounded-md"
+            type="button"
+          >
+            Got it, thanks!
+          </button>
+        </div>
+      </ModalContent>
+    </FramerModal>
   );
 };
 

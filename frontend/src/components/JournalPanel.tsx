@@ -4,7 +4,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import ButtonAnimatedGradient from "./ui/button";
 
-export const JournalPanel = () => {
+export const JournalPanel = ({ className }: { className: string }) => {
   const {
     journalDraft: draft,
     setJournalDraft: setDraft,
@@ -22,7 +22,9 @@ export const JournalPanel = () => {
   const [selectedTab, setSelectedTab] = useState("journal");
 
   return (
-    <section className="bg-violet-100/70 rounded-3xl backdrop-blur-[2px] p-7 flex flex-col gap-5 hover:shadow-lg hover:shadow-[rgba(37,33,78,0.35)] transition-shadow duration-250">
+    <section
+      className={`bg-violet-100/70 rounded-3xl backdrop-blur-[2px] p-7 flex flex-col gap-5 hover:shadow-lg hover:shadow-[rgba(37,33,78,0.35)] transition-shadow duration-250 ${className}`}
+    >
       <header className="grid grid-cols-3 items-center gap-3 bg-purple-400 rounded-3xl h-12 px-3">
         <motion.button
           whileTap={{ scale: 0.95 }}

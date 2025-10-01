@@ -1,5 +1,4 @@
 import React from "react";
-import { RecoilRoot } from "recoil";
 import TopBar from "./components/TopBar";
 import Sidebar from "./components/Sidebar";
 import MetricsBoard from "./components/MetricsBoard";
@@ -7,17 +6,22 @@ import HealthGoals from "./components/HealthGoals";
 import MoodWidget from "./components/MoodWidget";
 import JournalPanel from "./components/JournalPanel";
 import "./App.css";
+import TaskDeck from "./components/TaskDeck";
+import RecommendationCard from "./components/RecommendationCard";
+import Recommendation from "./components/Recommendation";
 
 function App() {
   console.log("App component rendered");
   return (
-    // <RecoilRoot>
     <>
       {/* <h1>App</h1> */}
       {console.log("App component rendered from inside JSX")}
       <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50 p-5">
         <div className="grid grid-cols-[auto_1fr] gap-5">
           {/* Sidebar */}
+          <div className="hidden lg:block w-20">
+            <Sidebar />
+          </div>
           <Sidebar />
 
           {/* Main Content */}
@@ -26,29 +30,21 @@ function App() {
             <TopBar />
 
             {/* Main Grid */}
-            <div className="grid grid-cols-[1fr_360px] gap-5">
-              {/* Left Column */}
-              <div className="flex flex-col gap-5">
-                {/* Metrics and Health Goals */}
-                <div className="grid grid-cols-2 gap-5">
-                  {/* <MetricsBoard /> */}
-                  {/* <HealthGoals /> */}
-                </div>
-
-                {/* Journal Panel */}
-                {/* <JournalPanel /> */}
+            <div className="grid grid-cols-1 md:grid-cols-15 gap-5">
+              <MoodWidget className="md:col-span-6" />
+              <MetricsBoard className="md:col-span-4" />
+              <div className="md:col-span-5 flex flex-col gap-5">
+                <HealthGoals className="md:col-span-5" />
+                <div className="self-stretch h-36 rounded-2xl md:col-span-5 bg-[url('/yoga.jpg')] bg-cover bg-center col-end" />
               </div>
-
-              {/* Right Column */}
-              <div className="flex flex-col gap-5">
-                <MoodWidget />
-              </div>
+              <JournalPanel className="md:col-span-9" />
+              {/* <TaskDeck className="md:col-span-6" /> */}
+              <Recommendation className="md:col-span-6" />
             </div>
           </div>
         </div>
       </div>
     </>
-    // </RecoilRoot>
   );
 }
 

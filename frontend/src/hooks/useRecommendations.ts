@@ -1,9 +1,8 @@
 import { useCallback, useEffect } from 'react';
 import axios from 'axios';
-import { useRecoilState, useSetRecoilState } from 'recoil';
 import { API_BASE_URL } from '../config';
 import type { RecommendationResponse } from '../types';
-import { errorAtom, loadingAtom, metricsAtom, tasksAtom } from '../state/atoms';
+import { useAppState } from '../state/useAppState';
 
 const client = axios.create({
   baseURL: API_BASE_URL,
@@ -15,10 +14,7 @@ const client = axios.create({
 const nowLocalIso = () => new Date().toISOString().slice(0, 19);
 
 export const useRecommendations = () => {
-  const [tasks, setTasks] = useRecoilState(tasksAtom);
-  const [loading, setLoading] = useRecoilState(loadingAtom);
-  const setMetrics = useSetRecoilState(metricsAtom);
-  const setError = useSetRecoilState(errorAtom);
+  const { tasks, setTasks, loading, setLoading, setMetrics, error, setError } = useAppState();
 
   const applyResponse = useCallback(
     (data: RecommendationResponse) => {

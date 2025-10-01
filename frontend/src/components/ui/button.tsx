@@ -69,7 +69,7 @@ const ButtonAnimatedGradient = ({
         handleMouseLeave();
         if (typeof rest.onMouseLeave === "function") rest.onMouseLeave(e);
       }}
-      className={`relative inline-flex w-fit mx-auto h-12 items-center justify-center overflow-hidden rounded-full border-2 dark:border-[#656fe2] border-[#c0c6fc] bg-gradient-to-r dark:from-[#5129a2] dark:to-[#710cb9] from-[#9ba3fdfd] to-[#3d5af1] px-6 font-medium text-white shadow-2xl transition-colors focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2 focus:ring-offset-gray-50 cursor-pointer ${className}`}
+      className={`relative inline-flex w-fit h-12 items-center justify-center overflow-hidden rounded-full border-2 dark:border-[#656fe2] border-[#c0c6fc] bg-gradient-to-r dark:from-[#5129a2] dark:to-[#710cb9] from-[#9ba3fdfd] to-[#3d5af1] px-6 font-medium text-white shadow-2xl transition-colors focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2 focus:ring-offset-gray-50 cursor-pointer ${className}`}
     >
       <div
         aria-hidden

@@ -1,14 +1,13 @@
 import { useLayoutEffect, useRef } from "react";
 import { gsap } from "gsap";
-import { useRecoilValue } from "recoil";
 import TaskCard from "./TaskCard";
 import { useRecommendations } from "../hooks/useRecommendations";
-import { errorAtom } from "../state/atoms";
+import { useAppState } from "../state/useAppState";
 
-export const TaskDeck = () => {
+export const TaskDeck = ({ className }: { className: string }) => {
   const { tasks, loading, completeTask, dismissTask, refresh } =
     useRecommendations();
-  const errorMessage = useRecoilValue(errorAtom);
+  const { error: errorMessage } = useAppState();
   const deckRef = useRef<HTMLDivElement | null>(null);
 
   useLayoutEffect(() => {
@@ -35,7 +34,9 @@ export const TaskDeck = () => {
   }, [tasks]);
 
   return (
-    <section className="flex flex-col gap-6 rounded-[28px] bg-white/90 p-6 shadow-lg">
+    <section
+      className={`flex flex-col gap-6 rounded-[28px] bg-white/90 p-6 shadow-lg ${className}`}
+    >
       <div className="flex items-end justify-between">
         <div>
           <h2 className="m-0 text-2xl text-[#2f2760]">Smart Task Manager</h2>

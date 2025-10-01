@@ -53,7 +53,7 @@ const mockMetrics: UserMetrics = {
   mood: 4,
 };
 
-export const HealthGoals = () => {
+export const HealthGoals = ({ className }: { className: string }) => {
   const [metrics, setMetrics] = useState<UserMetrics | null>(null);
 
   // Simulate fetching metrics
@@ -68,13 +68,13 @@ export const HealthGoals = () => {
   );
 
   return (
-    <section className=" flex flex-col">
-      <h2 className="m-0 text-xl font-semibold text-[#2f2760]">Health Goals</h2>
+    <section className={`flex flex-col ${className}`}>
+      <h2 className="m-0 text-xl font-semibold text-black">Health Goals</h2>
       <div className="flex flex-col gap-1 bg-slate-200/70 rounded-3xl backdrop-blur-md  p-2">
         {goals.map((goal) => (
           <article
             key={goal.id}
-            className="flex items-center gap-4.5 hover:bg-slate-100/50 
+            className="flex items-center gap-4.5 hover:bg-slate-100 transition-all duration-250 
            rounded-2xl p-4 cursor-pointer"
           >
             <div

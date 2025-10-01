@@ -1,118 +1,189 @@
-import { useMemo } from "react";
-import { useRecoilValue } from "recoil";
-import { FiSmile, FiDroplet, FiMoon, FiActivity } from "react-icons/fi";
-import { metricsAtom } from "../state/atoms";
-import type { UserMetrics } from "../types";
+import { useAppState } from "../state/useAppState";
+import { GlassWater } from "lucide-react";
+import FallingText from "@/components/ui/falling-text";
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+  ReferenceLine,
+} from "recharts";
 
-const getMoodLabel = (mood: number) => {
-  if (mood >= 4) return "Elated";
-  if (mood === 3) return "Content";
-  if (mood === 2) return "Pensive";
-  return "Low";
-};
+// Sample data for the step count chart
+const stepData = [
+  { name: "Mon", steps: 7500 },
+  { name: "Tue", steps: 9200 },
+  { name: "Wed", steps: 8100 },
+  { name: "Thu", steps: 8700 },
+  { name: "Fri", steps: 10200 },
+  { name: "Sat", steps: 9800 },
+  { name: "Sun", steps: 11000 },
+];
 
-const formatMetrics = (metrics: UserMetrics | null) => {
-  if (!metrics) {
-    return {
-      mood: { label: "Loading...", value: "—" },
-      sleep: { label: "", value: "—" },
-      water: { label: "", value: "—" },
-      steps: { label: "", value: "—" },
-    };
-  }
-
-  return {
-    mood: {
-      label: getMoodLabel(metrics.mood),
-      value: `${metrics.mood}/5`,
-    },
-    sleep: {
-      label: metrics.sleepHours >= 7 ? "Synced" : "Needed",
-      value: `${metrics.sleepHours} / 8 h`,
-    },
-    water: {
-      label: metrics.waterMl >= 2000 ? "Synced" : "Drink up",
-      value: `${(metrics.waterMl / 1000).toFixed(1)} / 2.0 L`,
-    },
-    steps: {
-      label: metrics.steps >= 8000 ? "Synced" : "Keep going",
-      value: `${metrics.steps.toLocaleString()}`,
-    },
-  };
-};
-
-export const MetricsBoard = () => {
-  const metrics = useRecoilValue(metricsAtom);
-  const formatted = useMemo(() => formatMetrics(metrics), [metrics]);
+export const MetricsBoard = ({ className }: { className: string }) => {
+  const { metrics } = useAppState();
 
   return (
-    <section className="bg-white/82 rounded-[28px] p-7 flex flex-col gap-6 shadow-lg shadow-indigo-500/12">
-      <header className="flex items-baseline justify-between">
-        <div>
-          <h2 className="m-0 text-[1.5rem] text-[#2f2760]">General Metrics</h2>
-          <span className="text-[0.85rem] text-[#2f2760]/60">Last Week</span>
-        </div>
-        <span className="text-[0.85rem] bg-indigo-500/10 py-2 px-4 rounded-[20px] text-indigo-600">
-          Mood Snapshot
+    <section className={`flex flex-col ${className}`}>
+      <div className="flex justify-between px-3">
+        <h2 className="m-0 text-xl font-semibold text-black">
+          General Metrics
+        </h2>
+        <span className="text-[0.85rem] text-[#2f2760]/60 flex items-center gap-1">
+          Last Week
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="w-4 h-4 text-[#2f2760]/60"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            strokeWidth={2}
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M19 9l-7 7-7-7"
+            />
+          </svg>
         </span>
-      </header>
+      </div>
 
-      <div className="grid grid-cols-4 gap-4.5">
-        <article className="bg-gradient-to-b from-indigo-300/30 to-purple-200/55 rounded-[24px] p-4.5 flex flex-col gap-3 min-h-[140px] relative overflow-hidden border border-white/22 text-[#271e55]">
-          <div className="w-[42px] h-[42px] rounded-[16px] grid place-items-center text-[1.25rem] bg-white/70 text-indigo-600">
-            <FiSmile />
+      <div className="grid grid-cols-5 row-3 gap-2">
+        <section className="bg-slate-200/70 rounded-3xl backdrop-blur-md  p-2 col-span-2 row-span-2 flex flex-col">
+          {/* Mood falling part */}
+          <h3 className="justify-start text-black text-xl font-normal ml-3">
+            Mood
+          </h3>
+          <div className="relative w-full h-full">
+            <FallingText
+              text="focused sad relaxed happy anxious excited tired"
+              highlightWords={[
+                "focused",
+                "sad",
+                "relaxed",
+                "happy",
+                "anxious",
+                "excited",
+                "tired",
+              ]}
+              // trigger="hover"
+              backgroundColor="transparent"
+              wireframes={false}
+              gravity={0.5}
+              fontSize="0.9rem"
+              mouseConstraintStiffness={0.7}
+            />
           </div>
-          <h3 className="m-0 text-base text-[#2f2760]">Mood</h3>
-          <p className="m-0 text-[1.2rem] font-semibold text-[#2f2760]">
-            {formatted.mood.label}
-          </p>
-          <span className="text-[0.85rem] text-[#271e55]/75">
-            {formatted.mood.value}
-          </span>
-        </article>
-
-        <article className="bg-purple-50/80 rounded-[24px] p-4.5 flex flex-col gap-3 min-h-[140px] relative overflow-hidden border border-white/22">
-          <div className="w-[42px] h-[42px] rounded-[16px] grid place-items-center text-[1.25rem] bg-pink-500/12 text-pink-500">
-            <FiMoon />
+        </section>
+        <section className="bg-slate-200/70 rounded-3xl backdrop-blur-md  p-4 col-span-3 row-span-1 h-32 flex flex-col justify-between">
+          <div className="flex justify-between items-center mb-2">
+            <h3 className="justify-start text-black text-xl font-normal ">
+              Sleep
+            </h3>
+            <div className=" text-center justify-center text-black text-xs font-semibold leading-none whitespace-nowrap text-nowrap flex-nowrap ">
+              <span className="bg-green-600 w-2.5 h-2.5 rounded-full inline-block mr-1"></span>
+              <span>Synced</span>
+            </div>
           </div>
-          <div className="flex items-center justify-between gap-3">
-            <span className="text-[0.75rem] text-[#2f2760]/60">
-              {formatted.sleep.label}
+          <div className="self-end ">
+            <span className="text-black text-4xl font-semibold ">7 </span>
+            <span className="text-black text-xl font-light ">/8 h</span>
+          </div>
+        </section>
+        <section className="bg-slate-200/70 rounded-3xl backdrop-blur-md  p-4 col-span-3 row-span-1 h-32 flex flex-col justify-between">
+          <div className="flex justify-between items-center mb-2">
+            <h3 className="justify-start text-black text-xl font-normal ">
+              Water Intake
+            </h3>
+            <div className=" text-center justify-center text-black text-xs font-semibold leading-none">
+              <span className="bg-green-600 w-2.5 h-2.5 rounded-full inline-block mr-1"></span>
+              <span>Synced</span>
+            </div>
+          </div>
+          <div className="self-end flex items-end ">
+            <span className="text-black text-4xl font-semibold ">7 </span>
+            <span className="text-black text-xl font-light flex ">
+              /8 <GlassWater className="w-4 h-4 self-center" />
             </span>
-            <h3 className="m-0 text-base text-[#2f2760]">Sleep</h3>
           </div>
-          <span className="text-[1.2rem] font-semibold text-[#2f2760]">
-            {formatted.sleep.value}
-          </span>
-        </article>
-
-        <article className="bg-purple-50/80 rounded-[24px] p-4.5 flex flex-col gap-3 min-h-[140px] relative overflow-hidden border border-white/22">
-          <div className="w-[42px] h-[42px] rounded-[16px] grid place-items-center text-[1.25rem] bg-blue-400/12 text-blue-400">
-            <FiDroplet />
+        </section>
+        <section className="bg-slate-200/70 rounded-3xl backdrop-blur-md  p-4 col-span-5 row-span-1 h-32 flex flex-col justify-between">
+          <div className="flex gap-6 items-center mb-2">
+            <h3 className="justify-start text-black text-xl font-normal ">
+              Steps
+            </h3>
+            <div className=" text-center justify-center text-black text-xs font-semibold leading-none">
+              <span className="bg-green-600 w-2.5 h-2.5 rounded-full inline-block mr-1"></span>
+              <span>Synced</span>
+            </div>
           </div>
-          <div className="flex items-center justify-between gap-3">
-            <span className="text-[0.75rem] text-[#2f2760]/60">
-              {formatted.water.label}
-            </span>
-            <h3 className="m-0 text-base text-[#2f2760]">Water Intake</h3>
+          <div className="flex justify-between items-center">
+            <div className="self-end">
+              <span className="text-black text-4xl font-semibold">
+                {metrics?.steps?.toLocaleString() || "9,800"}
+              </span>
+              <span className="text-black text-xl font-light ml-1">steps</span>
+            </div>
+            <div className="w-3/4 h-14">
+              <ResponsiveContainer width="100%" height="100%">
+                <LineChart
+                  data={stepData}
+                  margin={{ top: 5, right: 10, left: 0, bottom: 0 }}
+                >
+                  <CartesianGrid
+                    strokeDasharray="3 3"
+                    vertical={false}
+                    opacity={0.3}
+                  />
+                  <XAxis
+                    dataKey="name"
+                    axisLine={false}
+                    tickLine={false}
+                    tick={{ fontSize: 10 }}
+                    dy={5}
+                  />
+                  <YAxis hide domain={[0, 12000]} />
+                  <Tooltip
+                    contentStyle={{
+                      backgroundColor: "rgba(255, 255, 255, 0.8)",
+                      borderRadius: "8px",
+                      border: "none",
+                      boxShadow: "0 2px 10px rgba(0,0,0,0.1)",
+                    }}
+                    formatter={(value) => [`${value} steps`, "Steps"]}
+                    labelFormatter={(label) => `${label}`}
+                  />
+                  <ReferenceLine
+                    y={8000}
+                    stroke="#10B981"
+                    strokeDasharray="3 3"
+                  />
+                  <Line
+                    type="monotone"
+                    dataKey="steps"
+                    stroke="#6366F1"
+                    strokeWidth={3}
+                    dot={{
+                      stroke: "#6366F1",
+                      strokeWidth: 2,
+                      fill: "#fff",
+                      r: 4,
+                    }}
+                    activeDot={{
+                      stroke: "#6366F1",
+                      strokeWidth: 2,
+                      fill: "#6366F1",
+                      r: 6,
+                    }}
+                  />
+                </LineChart>
+              </ResponsiveContainer>
+            </div>
           </div>
-          <span className="text-[1.2rem] font-semibold text-[#2f2760]">
-            {formatted.water.value}
-          </span>
-        </article>
-
-        <article className="bg-gradient-to-b from-blue-300/25 to-cyan-100/40 rounded-[24px] p-4.5 flex flex-col gap-3 min-h-[140px] relative overflow-hidden border border-white/22">
-          <div className="w-[42px] h-[42px] rounded-[16px] grid place-items-center text-[1.25rem] bg-blue-600/12 text-blue-600">
-            <FiActivity />
-          </div>
-          <div className="flex items-center justify-between gap-3">
-            <span className="text-[0.75rem] text-[#2f2760]/60">Steps</span>
-            <h3 className="m-0 text-base text-[#2f2760]">Synced</h3>
-          </div>
-          <span className="text-[1.2rem] font-semibold text-[#2f2760]">
-            {formatted.steps.value}
-          </span>
-        </article>
+        </section>
       </div>
     </section>
   );
