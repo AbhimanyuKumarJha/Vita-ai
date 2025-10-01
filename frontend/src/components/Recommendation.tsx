@@ -1,4 +1,3 @@
-import React from "react";
 import RecommendationCard from "./RecommendationCard";
 const Recommendation = ({ className }: { className?: string }) => {
   const data = [

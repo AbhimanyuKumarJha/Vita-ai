@@ -1,9 +1,8 @@
-import React, {
+import {
   createContext,
-  useContext,
   useState,
   useEffect,
-  ReactNode,
+  // ReactNode,
 } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { X } from "lucide-react";
@@ -15,16 +14,16 @@ interface ModalContextProps {
 
 const ModalContext = createContext<ModalContextProps | undefined>(undefined);
 
-const useModal = () => {
-  const context = useContext(ModalContext);
-  if (!context) {
-    throw new Error("useModal must be used within a ModalProvider");
-  }
-  return context;
-};
+// const useModal = () => {
+//   const context = useContext(ModalContext);
+//   if (!context) {
+//     throw new Error("useModal must be used within a ModalProvider");
+//   }
+//   return context;
+// };
 
 interface FramerModalProps {
-  children: ReactNode;
+  children: any;
   open?: boolean;
   setOpen?: (open: boolean) => void;
 }
@@ -89,6 +88,6 @@ export function FramerModal({
   );
 }
 
-export function ModalContent({ children }: { children: ReactNode }) {
+export function ModalContent({ children }: { children: any }) {
   return <>{children}</>;
 }

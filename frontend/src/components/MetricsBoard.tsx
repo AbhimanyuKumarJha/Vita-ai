@@ -1,6 +1,6 @@
 import { useAppState } from "../state/useAppState";
 import { GlassWater } from "lucide-react";
-import FallingText from "@/components/ui/falling-text";
+import FallingText from "./ui/falling-text";
 import {
   LineChart,
   Line,

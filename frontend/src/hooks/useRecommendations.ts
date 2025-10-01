@@ -14,7 +14,7 @@ const client = axios.create({
 const nowLocalIso = () => new Date().toISOString().slice(0, 19);
 
 export const useRecommendations = () => {
-  const { tasks, setTasks, loading, setLoading, setMetrics, error, setError } = useAppState();
+  const { tasks, setTasks, loading, setLoading, setMetrics, setError } = useAppState();
 
   const applyResponse = useCallback(
     (data: RecommendationResponse) => {
